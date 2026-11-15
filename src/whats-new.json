@@ -1,0 +1,25 @@
+{
+	"id": "month-calendar",
+	"name": "Month Calendar",
+	"version": "1.0.0",
+	"changes": [],
+	"tip": "Select the month name above the calendar to open or create the monthly note. Select a week number to open the weekly note.",
+	"thanks": "Hi, I am Michael, a solo developer in Poland. Month Calendar is one of over 100 small plugins that I make. Thank you for trusting it with your notes.",
+	"related": [
+		{
+			"id": "one-way-backlinks",
+			"name": "One-way Backlinks",
+			"blurb": "List the notes that link here but that this note does not link back to."
+		},
+		{
+			"id": "search-operators",
+			"name": "Search Operators",
+			"blurb": "Search notes by date, by links to and from a note, by tag and by path."
+		},
+		{
+			"id": "context-trees",
+			"name": "Context Trees",
+			"blurb": "Show backlinks and search results as an outline with their headings."
+		}
+	]
+}

@@ -1,0 +1,73 @@
+[
+	{
+		"feature": "month-view",
+		"caption": "The month calendar in the sidebar with dots for words, rings for open tasks, week numbers and today.",
+		"note": "Daily/2026-11-10.md",
+		"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } return 'ok'; })()"
+	},
+	{
+		"feature": "open-daily",
+		"caption": "A click on 5 November opens the daily note of that day.",
+		"note": "Daily/2026-11-10.md",
+		"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } document.querySelector(\".mc-view .mc-day[data-date='2026-11-05']\").click(); await new Promise(r=>setTimeout(r,600)); if (app.workspace.getActiveFile()?.basename!=='2026-11-05') throw new Error('not opened'); return 'ok'; })()"
+	},
+	{
+		"feature": "week-notes",
+		"caption": "A click on week 45 opens the weekly note 2026-W45.",
+		"note": "Daily/2026-11-10.md",
+		"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } document.querySelector(\".mc-view .mc-week[data-week='45']\").click(); await new Promise(r=>setTimeout(r,600)); if (app.workspace.getActiveFile()?.basename!=='2026-W45') throw new Error('not opened'); return 'ok'; })()"
+	},
+	{
+		"feature": "month-year-notes",
+		"caption": "A click on the month name opens the monthly note 2026-11.",
+		"note": "Daily/2026-11-10.md",
+		"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } document.querySelector(\".mc-view .mc-month\").click(); await new Promise(r=>setTimeout(r,600)); if (app.workspace.getActiveFile()?.basename!=='2026-11') throw new Error('not opened'); return 'ok'; })()"
+	},
+	{
+		"feature": "quarter-year-cells",
+		"caption": "Pro shows the quarter and year cells under the month.",
+		"note": "Daily/2026-11-10.md",
+		"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } p.pro.opts.http = async () => ({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } }); app.secretStorage.setSecret('month-calendar-github-token', 'gho_' + '0'.repeat(36)); await p.pro.refreshNow(); if (!p.pro.isPro()) throw new Error('pro off'); p.settings.showQuarterRow=true; await v.refresh(true); if (!document.querySelector('.mc-view .mc-periods')) throw new Error('no quarter row'); return 'ok'; })()",
+		"after": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{showQuarterRow:false,heatProperty:'',tagColors:'',dateProperty:''}); p.pro.signOut(); p.refreshViews(true); return 'ok'; })()"
+	},
+	{
+		"feature": "heat-and-tags",
+		"caption": "Pro colours each day by the mood property and the dots by tag, and puts the trip note with a date property on 14 November.",
+		"note": "Daily/2026-11-10.md",
+		"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } p.pro.opts.http = async () => ({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } }); app.secretStorage.setSecret('month-calendar-github-token', 'gho_' + '0'.repeat(36)); await p.pro.refreshNow(); if (!p.pro.isPro()) throw new Error('pro off'); Object.assign(p.settings,{heatProperty:'mood',tagColors:'#work blue\\n#health green\\n#travel orange',dateProperty:'date'}); await v.refresh(true); { const h=document.querySelector('.mc-view .mc-heat-4'); if (!h) throw new Error('no heat'); const bg=getComputedStyle(h).backgroundColor; if (!bg || bg==='rgba(0, 0, 0, 0)' || bg==='transparent') throw new Error('heat has no colour '+bg); } if (!document.querySelector(\".mc-view .mc-day[data-date='2026-11-14'].has-note\")) throw new Error('no property note'); return 'ok'; })()",
+		"after": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{showQuarterRow:false,heatProperty:'',tagColors:'',dateProperty:''}); p.pro.signOut(); p.refreshViews(true); return 'ok'; })()"
+	},
+	{
+		"feature": "settings",
+		"caption": "The settings for the locale, the week start, the first week and the note folders.",
+		"eval": "(async () => { app.setting.open(); app.setting.openTabById('month-calendar'); await new Promise(r => setTimeout(r, 800)); return 'ok'; })()",
+		"after": "(async () => { app.setting.close(); return 'ok'; })()",
+		"wait": 700
+	},
+	{
+		"feature": "month-calendar",
+		"caption": "Open a day, a week and a month from the calendar.",
+		"frames": [
+			{
+				"note": "Daily/2026-11-10.md",
+				"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } return 'ok'; })()",
+				"hold": 1500
+			},
+			{
+				"note": "Daily/2026-11-10.md",
+				"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } document.querySelector(\".mc-view .mc-day[data-date='2026-11-05']\").click(); await new Promise(r=>setTimeout(r,600)); return 'ok'; })()",
+				"hold": 1500
+			},
+			{
+				"note": "Daily/2026-11-10.md",
+				"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } document.querySelector(\".mc-view .mc-week[data-week='45']\").click(); await new Promise(r=>setTimeout(r,600)); return 'ok'; })()",
+				"hold": 1500
+			},
+			{
+				"note": "Daily/2026-11-10.md",
+				"eval": "(async () => { const p=app.plugins.plugins['month-calendar']; Object.assign(p.settings,{dailySource:'custom',dailyFolder:'Month Calendar/Daily',dailyFormat:'YYYY-MM-DD',dailyTemplate:'Month Calendar/Templates/Daily',weeklyFolder:'Month Calendar/Weekly',monthlyFolder:'Month Calendar/Monthly',yearlyFolder:'Month Calendar/Monthly',quarterlyFolder:'Month Calendar/Monthly',weekStart:'1',firstWeek:'iso',showWeekNumbers:true}); document.querySelectorAll('.modal-container').forEach(el => el.remove()); await app.commands.executeCommandById('month-calendar:open'); const v=app.workspace.getLeavesOfType('month-calendar')[0].view; v.showMonth(2026,11); await v.refresh(true); { for (let i=0;i<60 && document.querySelectorAll('.mc-view .mc-day.has-note').length<8;i++) await new Promise(r=>setTimeout(r,100)); const n=document.querySelectorAll('.mc-view .mc-day.has-note').length; if (n<8) throw new Error('notes '+n+' want 8'); } document.querySelector(\".mc-view .mc-month\").click(); await new Promise(r=>setTimeout(r,600)); return 'ok'; })()",
+				"hold": 1500
+			}
+		]
+	}
+]

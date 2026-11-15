@@ -1,0 +1,313 @@
+{
+ "slug": "month-calendar",
+ "module": "month-calendar/src/dates",
+ "function": "weekOfYear",
+ "note": "Each case names its function in fn. weekOfYear(iso, rule) gives the week number and week year under a rule {weekStart 0 Sunday to 6 Saturday, minDays}; week 1 holds January minDays. ISO 8601 is {1, 4}, the United States is {0, 1}. ruleFromLocale(dow, doy) reads a moment locale. Names that start with a number are acceptance cases of BRIEF.md. Expected values are written by hand and checked against moment in tests/dates.test.ts.",
+ "cases": [
+  {
+   "name": "1 ISO week of 2021-01-03 is week 53 of 2020",
+   "fn": "weekOfYear",
+   "args": [
+    "2021-01-03",
+    {
+     "weekStart": 1,
+     "minDays": 4
+    }
+   ],
+   "expected": {
+    "week": 53,
+    "year": 2020
+   }
+  },
+  {
+   "name": "1 ISO week of 2021-01-04 is week 1 of 2021",
+   "fn": "weekOfYear",
+   "args": [
+    "2021-01-04",
+    {
+     "weekStart": 1,
+     "minDays": 4
+    }
+   ],
+   "expected": {
+    "week": 1,
+    "year": 2021
+   }
+  },
+  {
+   "name": "1 ISO week of 2024-12-30 is week 1 of 2025",
+   "fn": "weekOfYear",
+   "args": [
+    "2024-12-30",
+    {
+     "weekStart": 1,
+     "minDays": 4
+    }
+   ],
+   "expected": {
+    "week": 1,
+    "year": 2025
+   }
+  },
+  {
+   "name": "1 ISO week of 2026-12-31 is week 53 of 2026",
+   "fn": "weekOfYear",
+   "args": [
+    "2026-12-31",
+    {
+     "weekStart": 1,
+     "minDays": 4
+    }
+   ],
+   "expected": {
+    "week": 53,
+    "year": 2026
+   }
+  },
+  {
+   "name": "2 US week of 2025-12-28 is week 1 of 2026",
+   "fn": "weekOfYear",
+   "args": [
+    "2025-12-28",
+    {
+     "weekStart": 0,
+     "minDays": 1
+    }
+   ],
+   "expected": {
+    "week": 1,
+    "year": 2026
+   }
+  },
+  {
+   "name": "2 US week of 2026-11-10 is week 46",
+   "fn": "weekOfYear",
+   "args": [
+    "2026-11-10",
+    {
+     "weekStart": 0,
+     "minDays": 1
+    }
+   ],
+   "expected": {
+    "week": 46,
+    "year": 2026
+   }
+  },
+  {
+   "name": "2 Saturday start week of 2026-01-02 is week 1",
+   "fn": "weekOfYear",
+   "args": [
+    "2026-01-02",
+    {
+     "weekStart": 6,
+     "minDays": 1
+    }
+   ],
+   "expected": {
+    "week": 1,
+    "year": 2026
+   }
+  },
+  {
+   "name": "3 locale en gives Sunday start and January 1 rule",
+   "fn": "ruleFromLocale",
+   "args": [
+    0,
+    6
+   ],
+   "expected": {
+    "weekStart": 0,
+    "minDays": 1
+   }
+  },
+  {
+   "name": "3 locale de gives ISO 8601",
+   "fn": "ruleFromLocale",
+   "args": [
+    1,
+    4
+   ],
+   "expected": {
+    "weekStart": 1,
+    "minDays": 4
+   }
+  },
+  {
+   "name": "3 locale ar-ma gives Saturday start",
+   "fn": "ruleFromLocale",
+   "args": [
+    6,
+    12
+   ],
+   "expected": {
+    "weekStart": 6,
+    "minDays": 1
+   }
+  },
+  {
+   "name": "3 bad locale data falls back to ISO 8601",
+   "fn": "ruleFromLocale",
+   "args": [
+    9,
+    4
+   ],
+   "expected": {
+    "weekStart": 1,
+    "minDays": 4
+   }
+  },
+  {
+   "name": "4 2024 is a leap year",
+   "fn": "isLeapYear",
+   "args": [
+    2024
+   ],
+   "expected": true
+  },
+  {
+   "name": "4 2100 is not a leap year",
+   "fn": "isLeapYear",
+   "args": [
+    2100
+   ],
+   "expected": false
+  },
+  {
+   "name": "4 2000 is a leap year",
+   "fn": "isLeapYear",
+   "args": [
+    2000
+   ],
+   "expected": true
+  },
+  {
+   "name": "4 February 2028 has 29 days",
+   "fn": "daysInMonth",
+   "args": [
+    2028,
+    2
+   ],
+   "expected": 29
+  },
+  {
+   "name": "4 February 2026 has 28 days",
+   "fn": "daysInMonth",
+   "args": [
+    2026,
+    2
+   ],
+   "expected": 28
+  },
+  {
+   "name": "5 the month after December 2026 is January 2027",
+   "fn": "shiftMonth",
+   "args": [
+    2026,
+    12,
+    1
+   ],
+   "expected": {
+    "y": 2027,
+    "m": 1
+   }
+  },
+  {
+   "name": "5 the month before January 2026 is December 2025",
+   "fn": "shiftMonth",
+   "args": [
+    2026,
+    1,
+    -1
+   ],
+   "expected": {
+    "y": 2025,
+    "m": 12
+   }
+  },
+  {
+   "name": "5 Monday week start of Sunday 2026-03-08",
+   "fn": "startOfWeek",
+   "args": [
+    "2026-03-08",
+    1
+   ],
+   "expected": "2026-03-02"
+  },
+  {
+   "name": "5 Sunday week start of Sunday 2026-03-08",
+   "fn": "startOfWeek",
+   "args": [
+    "2026-03-08",
+    0
+   ],
+   "expected": "2026-03-08"
+  },
+  {
+   "name": "6 one dot for an empty note and five for 1,000 words or more",
+   "fn": "dotCount",
+   "args": [
+    0
+   ],
+   "expected": 1
+  },
+  {
+   "name": "6 three dots for 600 words",
+   "fn": "dotCount",
+   "args": [
+    600
+   ],
+   "expected": 3
+  },
+  {
+   "name": "6 dots stop at five",
+   "fn": "dotCount",
+   "args": [
+    5000
+   ],
+   "expected": 5
+  },
+  {
+   "name": "7 heat levels from lowest to highest, 0 for no value",
+   "fn": "heatLevels",
+   "args": [
+    [
+     1,
+     null,
+     5,
+     3,
+     9
+    ]
+   ],
+   "expected": [
+    1,
+    0,
+    3,
+    2,
+    4
+   ]
+  },
+  {
+   "name": "7 one value gives the strongest level",
+   "fn": "heatLevels",
+   "args": [
+    [
+     null,
+     7
+    ]
+   ],
+   "expected": [
+    0,
+    4
+   ]
+  },
+  {
+   "name": "8 words without frontmatter",
+   "fn": "countWords",
+   "args": [
+    "---\nmood: 4\n---\nOne two, three."
+   ],
+   "expected": 3
+  }
+ ]
+}

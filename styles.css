@@ -1,0 +1,209 @@
+/* Styles for Month Calendar. Obsidian loads this file while the plugin is enabled. */
+
+/* The pane: the title and the buttons, then the grid, then (Pro) the quarter and year cells. */
+.mc-view {
+	padding: var(--size-4-2);
+}
+
+.mc-header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-4-1);
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: var(--size-4-2);
+}
+
+.mc-title,
+.mc-nav {
+	display: flex;
+	gap: var(--size-4-1);
+	align-items: center;
+}
+
+.mc-period-title {
+	font-size: var(--font-ui-medium);
+	font-weight: var(--font-semibold);
+}
+
+.mc-period-title.has-note {
+	border-bottom: 2px solid var(--color-accent);
+}
+
+.mc-year {
+	color: var(--text-accent);
+}
+
+.mc-grid {
+	display: grid;
+	gap: 2px;
+}
+
+.mc-row {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 2px;
+}
+
+.mc-grid.has-weeks .mc-row {
+	grid-template-columns: minmax(0, 0.8fr) repeat(7, minmax(0, 1fr));
+}
+
+.mc-weekday {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.mc-cell {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	min-height: 36px;
+	padding: 4px 0 2px;
+	border-radius: var(--radius-s);
+	cursor: var(--cursor);
+	font-variant-numeric: tabular-nums;
+}
+
+.mc-cell:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.mc-cell:focus-visible {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: -2px;
+}
+
+.mc-week {
+	color: var(--text-faint);
+	font-size: var(--font-ui-smaller);
+}
+
+.mc-day.is-other-month {
+	color: var(--text-faint);
+}
+
+/* Today and the open note get a ring, so a Pro heat colour stays visible under them. */
+.mc-day.is-today {
+	box-shadow: inset 0 0 0 1px var(--text-accent);
+}
+
+.mc-day.is-today .mc-num {
+	color: var(--text-accent);
+	font-weight: var(--font-bold);
+}
+
+.mc-cell.is-active {
+	box-shadow: inset 0 0 0 2px var(--interactive-accent);
+}
+
+.mc-dots {
+	display: flex;
+	gap: 2px;
+	justify-content: center;
+	min-height: 6px;
+	margin-top: 2px;
+}
+
+.mc-dot {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background-color: var(--text-muted);
+}
+
+.mc-dot-task {
+	border: 1px solid var(--text-muted);
+	background-color: transparent;
+}
+
+.mc-dot-red { background-color: var(--color-red); }
+.mc-dot-orange { background-color: var(--color-orange); }
+.mc-dot-yellow { background-color: var(--color-yellow); }
+.mc-dot-green { background-color: var(--color-green); }
+.mc-dot-cyan { background-color: var(--color-cyan); }
+.mc-dot-blue { background-color: var(--color-blue); }
+.mc-dot-purple { background-color: var(--color-purple); }
+.mc-dot-pink { background-color: var(--color-pink); }
+
+/* Pro heat colours: level 1 is the lowest value of the month, level 4 the highest. */
+.mc-heat-1 { background-color: hsl(var(--color-accent-hsl), 0.12); }
+.mc-heat-2 { background-color: hsl(var(--color-accent-hsl), 0.24); }
+.mc-heat-3 { background-color: hsl(var(--color-accent-hsl), 0.38); }
+.mc-heat-4 { background-color: hsl(var(--color-accent-hsl), 0.55); }
+
+.mc-periods {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 2px;
+	margin-top: var(--size-4-2);
+}
+
+/* Phones and tablets: each cell and button is a tap target of 44 px or more. */
+.is-mobile .mc-cell,
+.is-mobile .mc-nav-button,
+.is-mobile .mc-period-title {
+	min-width: 44px;
+	min-height: 44px;
+}
+
+.is-mobile .mc-grid .mc-row {
+	grid-template-columns: repeat(7, minmax(44px, 1fr));
+}
+
+.is-mobile .mc-grid.has-weeks .mc-row {
+	grid-template-columns: repeat(8, minmax(44px, 1fr));
+}
+
+.is-mobile .mc-view {
+	overflow-x: auto;
+}
+
+/* Phones: the right drawer is 320 to 375 px wide, too narrow for 8 columns of 44 px.
+   The columns share the width, so the month fits with no side scroll. Each cell stays 44 px high. */
+.is-phone .view-content.mc-view {
+	padding-right: var(--size-4-1);
+	padding-left: var(--size-4-1);
+}
+
+.is-phone .mc-grid {
+	gap: 1px;
+}
+
+.is-phone .mc-grid:not(.has-weeks) .mc-row {
+	gap: 1px;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.is-phone .mc-grid.has-weeks .mc-row {
+	gap: 1px;
+	grid-template-columns: minmax(0, 0.8fr) repeat(7, minmax(0, 1fr));
+}
+
+.is-phone .mc-grid .mc-cell {
+	min-width: 0;
+}
+
+/* NoteMods What's new tab and settings card */
+.notemods-hello {
+	overflow-y: auto;
+}
+
+.notemods-hello-page {
+	max-width: var(--file-line-width);
+	margin: 0 auto;
+	padding: var(--size-4-6) var(--size-4-4);
+}
+
+.notemods-hello-sub,
+.notemods-hello-blurb {
+	color: var(--text-muted);
+}
+
+.notemods-hello-buttons .setting-item-control {
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
