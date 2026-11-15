@@ -72,7 +72,9 @@ export function stripComments(src: string): string {
 	return out;
 }
 
-const SOURCE_RULES: { rule: string; re: RegExp }[] = [
+// scope 'settings': the rule applies only to a file that defines a settings tab (the guideline and the
+// obsidianmd/settings-tab rules cover settings tabs only; a heading in a view such as the vendored hello page is allowed).
+const SOURCE_RULES: { rule: string; re: RegExp; scope?: 'settings' }[] = [
 	{ rule: 'innerHTML, outerHTML or insertAdjacentHTML', re: /\.(innerHTML|outerHTML)\b|insertAdjacentHTML/ },
 	{ rule: 'default hotkey on a command', re: /\bhotkeys\s*:/ },
 	{ rule: 'global app', re: /\bwindow\.app\b/ },
@@ -80,7 +82,7 @@ const SOURCE_RULES: { rule: string; re: RegExp }[] = [
 	{ rule: 'hardcoded style in JS', re: /\.style\.(?!setProperty\(\s*['"]--)[a-zA-Z]+\s*=(?!=)|\.style\.cssText|setAttribute\(\s*['"]style/ },
 	{ rule: 'workspace.activeLeaf', re: /\.activeLeaf\b/ },
 	{ rule: 'var declaration', re: /(?<![\w.$])var\s+[A-Za-z_$]/ },
-	{ rule: 'HTML heading element (use setHeading)', re: /createEl\(\s*['"]h[1-6]['"]/ },
+	{ rule: 'HTML heading element in a settings tab (use setHeading)', re: /createEl\(\s*['"]h[1-6]['"]/, scope: 'settings' },
 	{ rule: 'getFiles().find by path', re: /getFiles\(\)\s*\.\s*find\(/ },
 	{ rule: 'regex lookbehind (iOS before 16.4)', re: /\(\?<[!=]/ },
 	{ rule: 'global document (use activeDocument or el.doc)', re: /(?<![\w.$])document\.(body|activeElement|querySelector\w*|createElement|addEventListener)\b|registerDomEvent\(\s*document\b|\(\s*document\s*[,)]/ },
@@ -95,7 +97,9 @@ export function sourceProblems(files: Source[], pluginId: string): string[] {
 	const at = (f: Source, text: string, index: number) => `${f.path}:${text.slice(0, index).split('\n').length}`;
 	for (const f of files) {
 		const text = stripComments(f.text);
-		for (const { rule, re } of SOURCE_RULES) {
+		const settingsTab = /\bextends\s+PluginSettingTab\b/.test(text);
+		for (const { rule, re, scope } of SOURCE_RULES) {
+			if (scope === 'settings' && !settingsTab) continue;
 			const m = new RegExp(re.source, 'g').exec(text);
 			if (m) p.push(`${rule} at ${at(f, text, m.index)}`);
 		}
@@ -199,7 +203,7 @@ describe('directory presubmit catches planted faults', () => {
 		['inline style', 'el.style.color = "red";', 'hardcoded style'],
 		['activeLeaf', 'const l = this.app.workspace.activeLeaf;', 'activeLeaf'],
 		['var', 'var x = 1;', 'var declaration'],
-		['h2 in settings', "containerEl.createEl('h2', { text: 'General' });", 'HTML heading'],
+		['h2 in settings', "class S extends PluginSettingTab {\n\tdisplay(): void {\n\t\tcontainerEl.createEl('h2', { text: 'General' });\n\t}\n}", 'HTML heading element in a settings tab'],
 		['lookbehind regex', "const re = /(?<!!)\\[x\\]/g;", 'lookbehind'],
 		['global document listener', "this.registerDomEvent(document, 'keydown', f);", 'global document'],
 		['document.body', 'if (t === document.body) return;', 'global document'],
@@ -211,6 +215,10 @@ describe('directory presubmit catches planted faults', () => {
 		['CRLF source with innerHTML on line 3', 'a();\r\nb();\r\nel.innerHTML = s;\r\n', 'x.ts:3'],
 	])('source fault: %s', (_label, text, want) => {
 		expect(src(text).join('\n')).toContain(want);
+	});
+
+	it('allows a heading element outside a settings tab (the vendored hello page)', () => {
+		expect(src("page.createEl('h1', { text: 'Thanks for updating' });")).toEqual([]);
 	});
 
 	it('ignores the patterns inside comments and allows warn, error and debug', () => {
